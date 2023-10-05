@@ -1,7 +1,7 @@
 let numberOne = "";
 let numberTwo = "";
 let operator = "";
-let displayValue = "";
+let displayValue = "0";
 
 function add(numberOne, numberTwo) {
   return numberOne + numberTwo;
@@ -70,7 +70,22 @@ function createButton(label, buttonType) {
 }
 
 document.querySelector(".equals").addEventListener("click", function () {
-  calculateResult();
+  const display = document.querySelector(".calculator-display");
+  display.innerText = displayValue;
+  if (operator !== "") {
+    // If an operator is present, calculate the result with numberOne and numberTwo
+    numberTwo = displayValue;
+    const result = calculateResult(
+      parseFloat(numberOne),
+      parseFloat(numberTwo),
+      operator
+    );
+    displayValue = result.toString();
+    numberOne = "";
+    numberTwo = "";
+    operator = "";
+    display.innerText = displayValue;
+  }
 });
 
 document.querySelector(".clear").addEventListener("click", function () {
@@ -91,25 +106,37 @@ function clearCalculator() {
   numberOne = "";
   numberTwo = "";
   operator = "";
-  displayValue = "";
+  displayValue = "0";
   const display = document.querySelector(".calculator-display");
   display.innerText = displayValue;
 }
 
-//update display
-// when a digit button is pressed update the DisplayValue
-// when an operator Button is pressed update the numberOne value with the displayValue
-
 function updateDisplay(buttonLabel) {
   const display = document.querySelector(".calculator-display");
   if (isDigit(buttonLabel)) {
-    displayValue += buttonLabel;
+    if (displayValue === "0") {
+      displayValue = buttonLabel;
+    } else {
+      displayValue += buttonLabel;
+    }
   } else if (isOperator(buttonLabel)) {
-    numberOne = displayValue;
-    operator = buttonLabel;
-    displayValue = "";
-    console.log(numberOne);
-    console.log(operator);
+    if (numberOne === "") {
+      numberOne = displayValue;
+      operator = buttonLabel;
+      displayValue = "0";
+      console.log(numberOne);
+      console.log(operator);
+    } else {
+      numberTwo = displayValue;
+      console.log(numberTwo);
+      numberOne = calculateResult(
+        parseFloat(numberOne),
+        parseFloat(numberTwo),
+        operator
+      ).toString();
+      operator = buttonLabel;
+      displayValue = "0";
+    }
   }
   display.innerText = displayValue;
 }
@@ -123,3 +150,12 @@ function isOperator(buttonLabel) {
 }
 
 clearCalculator(); // clears the calculator on page load
+
+// Rules
+
+// ✅ Step1: listen for digits being entered and display in displayValue
+// ✅ Step2: listen for an operator button being pressed and store displayValue as numberOne
+// Step3: listen for digits being entered and display in displayValue
+//💭 if numberOne is not empty then we are working on numberTwo
+// if = is pressed store displayValue as numberTwo, calculateResult updating displayValue with the answer
+// if an operater is pressed, calculateResult and store it as numberOne, repeat step3
