@@ -4,8 +4,14 @@
 .equals {
     color: white;
     background-color: grey;
-    width: 60px;
+    width: 50%;
     border-radius: 10px;
     font-size: 25px;
+}
 
+.calculator-display {
+    width: 80%;
+    background-color: black;
+    color: red;
+    font-size: 30px;
 }

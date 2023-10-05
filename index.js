@@ -39,16 +39,6 @@ function operate(numberOne, numberTwo, operator) {
   }
 }
 
-// 4) create the html; button for each digit, operators adn equals key
-// display for the numbers to appear in
-// clear button - to reset all variables
-
-// step 1 create 1 button
-// step 2 create operatorArray +, -, *, /
-// step 2.5 map through digit buttom 0-9
-// step 3 map through operatorArray appending button for each item of array
-
-// Step 1
 function createButton(label, buttonType) {
   const buttonDiv = document.getElementsByClassName(buttonType)[0];
   const button = document.createElement("button");
