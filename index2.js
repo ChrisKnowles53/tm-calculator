@@ -34,24 +34,61 @@ function operate(firstNumber, secondNumber, operator) {
   }
 }
 
-function updateDisplay
-// code to update display
-    
-function updateNumber
-// code to update first or second number
-    
-function setOperator
-// code to set operator to button pressed
-    
-function clearCalculator
-//code to clear
-    
-function calculateResult
-//code to pass arguments to operate and update display
-    
-.addEventListener
-// digit button
-// operator button
-// equals button
-// clear button
+function updateDisplay(value) {
+  const display = document.getElementById("display");
+  display.textContent = value;
+}
 
+function updateNumber(digit) {
+  if (operator === "") {
+    firstNumber += digit;
+    updateDisplay(firstNumber);
+  } else {
+    secondNumber += digit;
+    updateDisplay(secondNumber);
+  }
+}
+
+function setOperator(operatorValue) {
+  operator = operatorValue;
+}
+
+function clearCalculator() {
+  firstNumber = "";
+  secondNumber = "";
+  operator = "";
+  updateDisplay("0");
+}
+
+function calculateResult() {
+  if (operator && firstNumber !== "" && secondNumber !== "") {
+    const result = operate(
+      parseFloat(firstNumber),
+      parseFloat(secondNumber),
+      operator
+    );
+    updateDisplay(result);
+    firstNumber = result.toString();
+    operator = "";
+    secondNumber = "";
+  }
+}
+
+// EventListeners
+const digits = document.querySelectorAll(".digit");
+const operators = document.querySelectorAll(".operator");
+const equalsButton = document.getElementById("equals");
+const clearButton = document.getElementById("clear");
+
+digits.forEach((digit) => {
+  digit.addEventListener("click", () => updateNumber(digit.textContent));
+});
+
+operators.forEach((operatorButton) => {
+  operatorButton.addEventListener("click", () =>
+    setOperator(operatorButton.textContent)
+  );
+});
+
+equalsButton.addEventListener("click", calculateResult);
+clearButton.addEventListener("click", clearCalculator);
