@@ -33,7 +33,8 @@ body {
 
 .digit {
     background-color: #0000FF;
-    width: 30px;
+    width: 40px;
+    height: 40px;
     margin: 3px;
 }
 
