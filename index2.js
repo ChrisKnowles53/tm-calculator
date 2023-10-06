@@ -15,7 +15,9 @@ function mulitply(firstNumber, secondNumber) {
 }
 
 function divide(firstNumber, secondNumber) {
-  if (secondNumber === 0) return "Division by zero is not allowed";
+  if (secondNumber === 0) {
+    return "Division by zero is not allowed";
+  }
   return firstNumber / secondNumber;
 }
 

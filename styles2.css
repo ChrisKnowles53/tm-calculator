@@ -1,0 +1,42 @@
+* {
+    font-size: 25px;
+    border-radius: 8px;
+    color: white;
+}
+
+#calculator {
+    background-color: grey;
+    width: 220px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#display {
+    background-color: black;
+    width: 200px;
+    padding: 3px 10px;
+    margin-bottom: 10px;    
+}
+
+.digit {
+    background-color: blue;
+    width: 30px;
+    margin: 3px;
+}
+
+.operator {
+    color: black;
+    background-color: ivory;
+}
+
+#clear, #equals {
+    color: black;
+    background-color: ivory;
+    width: 60px;
+}
+#zero {
+    width: 60px;
+}
