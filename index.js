@@ -73,7 +73,6 @@ document.querySelector(".equals").addEventListener("click", function () {
   const display = document.querySelector(".calculator-display");
   display.innerText = displayValue;
   if (operator !== "") {
-    // If an operator is present, calculate the result with numberOne and numberTwo
     numberTwo = displayValue;
     const result = calculateResult(
       parseFloat(numberOne),
@@ -96,7 +95,7 @@ function handleButtonClick(buttonLabel) {
   if (buttonLabel === "Clear") {
     clearCalculator();
   } else if (buttonLabel === "=") {
-    calculateResult(); // ✨✨need to pass in the arguments
+    calculateResult();
   } else {
     updateDisplay(buttonLabel);
   }
@@ -114,7 +113,7 @@ function clearCalculator() {
 function updateDisplay(buttonLabel) {
   const display = document.querySelector(".calculator-display");
   if (isDigit(buttonLabel)) {
-    if (displayValue === "0") {
+    if (displayValue === "0" || operator !== "") {
       displayValue = buttonLabel;
     } else {
       displayValue += buttonLabel;
@@ -128,14 +127,13 @@ function updateDisplay(buttonLabel) {
       console.log(operator);
     } else {
       numberTwo = displayValue;
-      console.log(numberTwo);
       numberOne = calculateResult(
         parseFloat(numberOne),
         parseFloat(numberTwo),
         operator
       ).toString();
       operator = buttonLabel;
-      displayValue = "0";
+      displayValue = numberOne;
     }
   }
   display.innerText = displayValue;
@@ -150,12 +148,3 @@ function isOperator(buttonLabel) {
 }
 
 clearCalculator(); // clears the calculator on page load
-
-// Rules
-
-// ✅ Step1: listen for digits being entered and display in displayValue
-// ✅ Step2: listen for an operator button being pressed and store displayValue as numberOne
-// Step3: listen for digits being entered and display in displayValue
-//💭 if numberOne is not empty then we are working on numberTwo
-// if = is pressed store displayValue as numberTwo, calculateResult updating displayValue with the answer
-// if an operater is pressed, calculateResult and store it as numberOne, repeat step3
