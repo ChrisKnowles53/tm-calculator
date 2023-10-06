@@ -2,16 +2,28 @@
 
 
 .equals, .clear{
-    color: white;
-    background-color: grey;
+    color: black;
+    background-color: ivory;
     width: 50%;
     border-radius: 10px;
     font-size: 25px;
 }
 
 .calculator-display {
-    width: 50%;
+    /* width: 50%; */
     background-color: black;
-    color: red;
+    color: white;
+    border-radius: 5px;
     font-size: 30px;
+    padding: 3px 10px;
+    margin: 3px 10px;
+}
+
+.button-container {
+    margin: 3px 10px;
+}
+
+.calculator-container {
+    background-color: grey;
+    width: 50%;
 }

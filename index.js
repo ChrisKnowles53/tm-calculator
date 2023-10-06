@@ -55,7 +55,7 @@ function createButton(label, buttonType) {
   button.classList.add(buttonType);
 
   if (buttonType === "operators") {
-    button.style.backgroundColor = "grey";
+    button.style.backgroundColor = "ivory";
     button.style.color = "black";
   } else {
     button.style.backgroundColor = "blue";
