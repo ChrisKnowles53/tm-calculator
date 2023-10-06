@@ -50,6 +50,9 @@ function updateNumber(digit) {
 }
 
 function setOperator(operatorValue) {
+  if (secondNumber !== "") {
+    calculateResult();
+  }
   operator = operatorValue;
 }
 
