@@ -70,21 +70,7 @@ function createButton(label, buttonType) {
 }
 
 document.querySelector(".equals").addEventListener("click", function () {
-  const display = document.querySelector(".calculator-display");
-  display.innerText = displayValue;
-  if (operator !== "") {
-    numberTwo = displayValue;
-    const result = calculateResult(
-      parseFloat(numberOne),
-      parseFloat(numberTwo),
-      operator
-    );
-    displayValue = result.toString();
-    numberOne = "";
-    numberTwo = "";
-    operator = "";
-    display.innerText = displayValue;
-  }
+  performCalculation();
 });
 
 document.querySelector(".clear").addEventListener("click", function () {
@@ -95,7 +81,9 @@ function handleButtonClick(buttonLabel) {
   if (buttonLabel === "Clear") {
     clearCalculator();
   } else if (buttonLabel === "=") {
-    calculateResult();
+    performCalculation();
+  } else if (isOperator(buttonLabel)) {
+    updateNumberTwo(buttonLabel);
   } else {
     updateDisplay(buttonLabel);
   }
@@ -110,31 +98,63 @@ function clearCalculator() {
   display.innerText = displayValue;
 }
 
+// Refactor
+function handleDigitInput(buttonLabel) {
+  if (displayValue === "0" || operator !== "") {
+    displayValue = buttonLabel;
+  } else {
+    displayValue += buttonLabel;
+  }
+}
+
+function performCalculation() {
+  const display = document.querySelector(".calculator-display");
+
+  if (operator !== "") {
+    numberTwo = displayValue;
+    const result = calculateResult(
+      parseFloat(numberOne),
+      parseFloat(numberTwo),
+      operator
+    );
+    if (typeof result === "number") {
+      displayValue = result.toString();
+    } else {
+      displayValue = result;
+    }
+    numberOne = "";
+    numberTwo = "";
+    operator = "";
+    display.innerText = displayValue;
+  }
+}
+
+function updateNumberOne(buttonLabel) {
+  if (numberOne === "") {
+    numberOne = displayValue;
+    operator = buttonLabel;
+    displayValue = "0";
+  }
+}
+
+function updateNumberTwo(buttonLabel) {
+  numberTwo = displayValue;
+  numberOne = calculateResult(
+    parseFloat(numberOne),
+    parseFloat(numberTwo),
+    operator
+  ).toString();
+  operator = buttonLabel;
+  displayValue = numberOne;
+}
+
 function updateDisplay(buttonLabel) {
   const display = document.querySelector(".calculator-display");
+
   if (isDigit(buttonLabel)) {
-    if (displayValue === "0" || operator !== "") {
-      displayValue = buttonLabel;
-    } else {
-      displayValue += buttonLabel;
-    }
+    handleDigitInput(buttonLabel);
   } else if (isOperator(buttonLabel)) {
-    if (numberOne === "") {
-      numberOne = displayValue;
-      operator = buttonLabel;
-      displayValue = "0";
-      console.log(numberOne);
-      console.log(operator);
-    } else {
-      numberTwo = displayValue;
-      numberOne = calculateResult(
-        parseFloat(numberOne),
-        parseFloat(numberTwo),
-        operator
-      ).toString();
-      operator = buttonLabel;
-      displayValue = numberOne;
-    }
+    updateNumberOne();
   }
   display.innerText = displayValue;
 }
@@ -148,3 +168,32 @@ function isOperator(buttonLabel) {
 }
 
 clearCalculator(); // clears the calculator on page load
+
+// function updateDisplay(buttonLabel) {
+//   const display = document.querySelector(".calculator-display");
+//   if (isDigit(buttonLabel)) {
+//     if (displayValue === "0" || operator !== "") {
+//       displayValue = buttonLabel;
+//     } else {
+//       displayValue += buttonLabel;
+//     }
+//   } else if (isOperator(buttonLabel)) {
+//     if (numberOne === "") {
+//       numberOne = displayValue;
+//       operator = buttonLabel;
+//       displayValue = "0";
+//       console.log(numberOne);
+//       console.log(operator);
+//     } else {
+//       numberTwo = displayValue;
+//       numberOne = calculateResult(
+//         parseFloat(numberOne),
+//         parseFloat(numberTwo),
+//         operator
+//       ).toString();
+//       operator = buttonLabel;
+//       displayValue = numberOne;
+//     }
+//   }
+//   display.innerText = displayValue;
+// }
